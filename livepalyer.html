@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Слонік Плеєр</title>
+</head>
+<body style="margin:0; background:black;">
+
+  <video id="video" controls width="100%" height="100%" style="max-height: 100vh;"></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    function getUrlParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    const videoSrc = getUrlParam('url');
+    const video = document.getElementById('video');
+
+    if (!videoSrc) {
+      window.location.href = '/?ref=liveplayer';
+    } else if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play().then(() => {
+          return video.requestFullscreen();
+        }).catch(err => {
+          console.warn('Fullscreen or playback failed:', err);
+        });
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+      video.addEventListener('loadedmetadata', function () {
+        video.play().then(() => {
+          return video.requestFullscreen();
+        }).catch(err => {
+          console.warn('Fullscreen or playback failed:', err);
+        });
+      });
+    } else {
+      alert('Your browser does not support HLS playback.');
+    }
+  </script>
+
+</body>
+</html>
