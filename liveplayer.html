@@ -8,60 +8,10 @@
 
   <video id="video" controls width="100%" height="100%" style="max-height: 100vh;"></video>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script>
-    function getUrlParam(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name);
-    }
-
-    function redirect() {
-      window.location.href = '/?ref=liveplayer';
-    }
-
-    const videoSrc = getUrlParam('url');
-    const video = document.getElementById('video');
-
-    if (!videoSrc) {
-      redirect();
-    } else if (Hls.isSupported()) {
-      const hls = new Hls();
-
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play().then(() => {
-          return video.requestFullscreen();
-        }).catch(() => {});
-      });
-
-      // Detect load errors and redirect
-      hls.on(Hls.Events.ERROR, function (event, data) {
-        if (data.fatal) {
-          console.warn('HLS error:', data);
-          hls.destroy();
-          redirect();
-        }
-      });
-
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // Safari fallback
-      video.src = videoSrc;
-      video.addEventListener('loadedmetadata', function () {
-        video.play().then(() => {
-          return video.requestFullscreen();
-        }).catch(() => {});
-      });
-
-      video.addEventListener('error', function () {
-        redirect();
-      });
-    } else {
-      alert('Your browser does not support HLS playback.');
-      redirect();
-    }
-  </script>
+  <script src="js/PlayerConfig.js"></script>
+<script>
+  PlayerConfig.init();
+</script>
 
 </body>
 </html>
