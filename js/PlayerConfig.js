@@ -37,7 +37,7 @@ PlayerConfig = {
             })
             .then(data => {
                 UserInfo.UserResponse = data;
-                this.parse(data);
+                this.parseUserData(data);
             })
             .catch(err => {
                 console.error('Failed to fetch playlists:', err);
