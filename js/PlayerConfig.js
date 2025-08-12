@@ -91,6 +91,7 @@ PlayerConfig = {
         if(UserInfo.Status == 4)
         {
             this.redirect(`Користувач @${UserInfo.name} Офлайн!`);
+            return;
         }
 
         if (UserInfo.currentIndex >= UserInfo.playlist.length) {
