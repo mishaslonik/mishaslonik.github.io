@@ -9,6 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/modal.css">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans&display=swap"
 		rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +28,13 @@
 </head>
 
 <body onload="LinksPage.OnloadPage()">
+
+<div id="warnOverlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div id="warnModal" class="modal">
+      <button id="closeBtn" class="close" aria-label="Close warning">✕</button>
+      <div id="warnMessage" class="message"></div>
+    </div>
+  </div>
 
 	<header class="header">
 		<div class="container">
